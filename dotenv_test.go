@@ -33,8 +33,10 @@ func Test_Load_ExpectVarsLoadedSuccessfully(t *testing.T) {
 			Value: " does not trim  spaces  ",
 		},
 		{
-			Name:  "TEST_MULTI_LINE",
-			Value: "first line\nsecond line\nthird line",
+			Name: "TEST_MULTI_LINE",
+			Value: `first line
+second line
+third line`,
 		},
 		{
 			Name:  "TEST_SINGLE_QUOTE",

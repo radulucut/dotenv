@@ -43,7 +43,7 @@ func Load(filename string) error {
 					if buf[pos] == quoteType {
 						break
 					}
-				} else if buf[pos] == '\n' {
+				} else if buf[pos] == '\n' || buf[pos] == '\r' {
 					break
 				}
 
