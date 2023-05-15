@@ -4,6 +4,9 @@ import (
 	"os"
 )
 
+// Reads your env file and loads it into ENV for this process.
+//
+//	It overrides existing variables
 func Load(filename string) error {
 	buf, err := os.ReadFile(filename)
 	if err != nil {
@@ -13,7 +16,7 @@ func Load(filename string) error {
 	var startName, endName, startValue, pos int
 	var parsingName = true
 	var insideQuotes = false
-	var escapeMap = map[int]bool{}
+	var quoteType byte
 
 	for pos < len(buf) {
 		if parsingName {
@@ -27,21 +30,17 @@ func Load(filename string) error {
 			parsingName = false
 			pos++ // skip '='
 		} else {
-			if buf[pos] == '\\' {
-				escapeMap[pos+1] = true
-				pos++ // skip escape byte
-			} else if buf[pos] == '"' {
+			if buf[pos] == '"' || buf[pos] == '\'' {
 				insideQuotes = true
-				pos++ // skip '='
+				quoteType = buf[pos]
+				pos++ // skip quote
 			}
 
 			startValue = pos
 
 			for pos < len(buf) {
-				if !escapeMap[pos] && buf[pos] == '\\' {
-					escapeMap[pos+1] = true
-				} else if insideQuotes {
-					if !escapeMap[pos] && buf[pos] == '"' {
+				if insideQuotes {
+					if buf[pos] == quoteType {
 						break
 					}
 				} else if buf[pos] == '\n' {
@@ -50,8 +49,6 @@ func Load(filename string) error {
 
 				pos++
 			}
-
-			// TODO: Remove escape bytes
 
 			os.Setenv(string(buf[startName:endName]), string(buf[startValue:pos]))
 
@@ -69,15 +66,6 @@ func Load(filename string) error {
 
 	return nil
 }
-
-// returns new start pos for the value
-// func shiftEscapeBytes(buf *[]byte, escapeMap *map[uint]bool, start uint, end uint)  uint {
-// 	for start < end {
-// 		if escapeMap[end] {
-//
-// 		}
-// 	}
-// }
 
 func isWhiteSpace(b byte) bool {
 	switch b {
