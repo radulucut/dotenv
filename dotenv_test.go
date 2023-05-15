@@ -19,6 +19,8 @@ func Test_Load_ExpectVarsLoadedSuccessfully(t *testing.T) {
 		t.Errorf("Expected no error parsing but found %s", err)
 	}
 
+	multiline, _ := os.ReadFile("multiline.test")
+
 	var expectedVars = []Var{
 		{
 			Name:  "TEST_VAR",
@@ -33,10 +35,8 @@ func Test_Load_ExpectVarsLoadedSuccessfully(t *testing.T) {
 			Value: " does not trim  spaces  ",
 		},
 		{
-			Name: "TEST_MULTI_LINE",
-			Value: `first line
-second line
-third line`,
+			Name:  "TEST_MULTI_LINE",
+			Value: string(multiline),
 		},
 		{
 			Name:  "TEST_SINGLE_QUOTE",
