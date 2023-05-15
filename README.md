@@ -40,7 +40,7 @@ func main() {
 
 	myVar := os.Getenv("MY_VAR")
 	secretKey := os.Getenv("SECRET_KEY")
-    singleQuote := os.Getenv("SINGLE_QUOTE")
+	singleQuote := os.Getenv("SINGLE_QUOTE")
 
 	// ...
 }
