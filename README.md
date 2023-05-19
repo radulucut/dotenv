@@ -2,9 +2,7 @@
 
 **A simple .env file loader for go(golang)**
 
-- Overrides existing variables
-- Does not trim spaces
-- Does not support comments
+![Test](https://github.com/radulucut/dotenv/actions/workflows/test.yml/badge.svg)
 
 ## Install
 
@@ -45,3 +43,9 @@ func main() {
 	// ...
 }
 ```
+
+### Notes:
+
+- Overrides existing variables
+- Does not trim spaces
+- Does not support comments
